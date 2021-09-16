@@ -1,3 +1,5 @@
+_**Forked from lionix-team/vue-image-markup**_
+
 # Markup Image with Vue.js (customizable)
 [![](https://img.shields.io/npm/dt/vue-image-markup.svg)](https://www.npmjs.com/package/vue-image-markup)
 [![](https://img.shields.io/npm/v/vue-image-markup.svg)](https://www.npmjs.com/package/vue-image-markup)
@@ -7,11 +9,11 @@
 
 ## Installation
 
-`npm i vue-image-markup`
+`npm i d2pro/vue-image-markup`
 
 or
 
-`yarn add vue-image-markup`
+`yarn add d2pro/vue-image-markup`
 
 ## Usage
 
