@@ -75,6 +75,10 @@
                 this.color = colorProperty;
                 this.set(this.currentActiveTool)
             },
+            changeStrokeWidth(strokeWidth) {
+                this.strokeWidth = strokeWidth
+                this.set(this.currentActiveTool)
+            },
             setBackgroundImage(imageUrl, backgroundColor = "#fff") {
                 let img = new Image();
                 this.toDataUrl(imageUrl, (dataUri) => {
