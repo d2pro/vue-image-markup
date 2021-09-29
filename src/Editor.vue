@@ -117,6 +117,15 @@
                 this.canvas.clear()
                 this.cancelCroppingImage()
             },
+            serialize() {
+                return this.canvas.toJSON()
+            },
+            loadFromJSON(json) {
+                this.canvas.loadFromJSON(json)
+            },
+            getCanvas() {
+                return this.canvas
+            },
             set(type, params) {
                 this.canvas.off('mouse:down')
                 switch (type) {
