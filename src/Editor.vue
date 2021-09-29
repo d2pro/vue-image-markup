@@ -89,7 +89,7 @@
                 let activeObject = this.canvas.getActiveObject()
                 console.log('ao', activeObject);
                 if (activeObject && activeObject[prop]) {
-                    activeObject[prop] = value
+                    activeObject.set(prop, value)
                     this.canvas.requestRenderAll()
                 }
             },
