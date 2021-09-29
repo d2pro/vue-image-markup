@@ -89,6 +89,7 @@
             updateActiveObjectProperty(prop, value) {
                 let activeObject = this.canvas.getActiveObject()
                 if (activeObject) {
+                    console.log('ao', activeObject);
                     let props = prop.split('|')
                     console.log('props', props);
                     let propName = (props[0] in activeObject) ? props[0] : (props.length > 1 ? props[1] : null)
