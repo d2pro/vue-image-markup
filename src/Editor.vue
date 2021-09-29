@@ -76,8 +76,13 @@
                 })
                 return findedObject;
             },
-            changeColor(colorProperty) {
-                this.color = colorProperty;
+            changeColor(color) {
+                this.color = color
+                let activeObject = this.canvas.getActiveObject()
+                console.log('ao', activeObject);
+                if (activeObject) {
+                    activeObject.stroke = color
+                }
                 this.set(this.currentActiveTool)
             },
             changeStrokeWidth(strokeWidth) {
