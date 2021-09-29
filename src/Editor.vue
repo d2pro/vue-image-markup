@@ -78,7 +78,7 @@
             },
             changeColor(color) {
                 this.color = color
-                this.updateActiveObjectProperty('stroke', color)
+                this.updateActiveObjectProperty('stroke|fill', color)
                 this.set(this.currentActiveTool)
             },
             changeStrokeWidth(strokeWidth) {
@@ -88,10 +88,15 @@
             },
             updateActiveObjectProperty(prop, value) {
                 let activeObject = this.canvas.getActiveObject()
-                console.log('ao', activeObject);
-                if (activeObject && activeObject[prop]) {
-                    activeObject.set(prop, value)
-                    this.canvas.requestRenderAll()
+                if (activeObject) {
+                    let props = prop.split('|')
+                    console.log('props', props);
+                    let propName = activeObject[props[0]] !== undefined ? props[0] : (props.length > 1 ? props[1] : null)
+                    console.log('pn', propName);
+                    if (propName) {
+                        activeObject.set(propName, value)
+                        this.canvas.requestRenderAll()
+                    }
                 }
             },
             setBackgroundImage(imageUrl, backgroundColor = "#fff") {
