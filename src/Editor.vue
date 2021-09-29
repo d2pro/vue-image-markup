@@ -83,6 +83,7 @@
             },
             changeStrokeWidth(strokeWidth) {
                 this.strokeWidth = strokeWidth
+                this.updateActiveObjectProperty('strokeWidth', strokeWidth)
                 this.set(this.currentActiveTool)
             },
             updateActiveObjectProperty(prop, value) {
