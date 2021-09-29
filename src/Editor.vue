@@ -132,10 +132,13 @@
                 return this.canvas
             },
             set(type, params) {
-                this.canvas.off('mouse:down')
+                if (this.currentActiveTool === 'eraser') {
+                    this.canvas.off('mouse:down')
+                }
+                this.cancelCroppingImage()
+                this.currentActiveTool = type
                 switch (type) {
                     case "text":
-                        this.currentActiveTool = type;
                         this.params = {
                             fill: (params && params.fill) ? params.fill : this.color,
                             fontFamily: (params && params.fontFamily) ? params.fontFamily : 'Arial',
@@ -147,10 +150,7 @@
                         };
                         this.addText(this.params);
                         break;
-
                     case "circle":
-                        this.cancelCroppingImage();
-                        this.currentActiveTool = type;
                         this.params = {
                             fill: (params && params.fill) ? params.fill : 'transparent',
                             stroke: (params && params.stroke) ? params.stroke : this.color,
@@ -167,29 +167,8 @@
                         this.customCircle(type, this.params);
                         break;
                     case "rect":
-                        this.cancelCroppingImage();
-                        this.currentActiveTool = type;
-                        this.params = {
-                            fill: (params && params.fill) ? params.fill : 'transparent',
-                            stroke: (params && params.stroke) ? params.stroke : this.color,
-                            strokeWidth: (params && params.strokeWidth) ? params.strokeWidth : this.strokeWidth,
-                            angle: (params && params.angle) ? params.angle : 0,
-                            width: (params && params.width) ? params.width : null,
-                            height: (params && params.height) ? params.height : null,
-                            top: (params && params.top) ? params.top : 0,
-                            left: (params && params.left) ? params.left : 0,
-                            opacity: (params && params.opacity) ? params.opacity : 1,
-                            strokeUniform: (params && params.strokeUniform) ? params.strokeUniform : true,
-                            noScaleCache: (params && params.noScaleCache) ? params.noScaleCache : false,
-                            strokeDashArray: (params && params.strokeDashArray) ? params.strokeDashArray : false,
-                            borderRadius: (params && params.borderRadius) ? params.borderRadius : 0,
-                            id: (params && params.id) ? params.id : '',
-                        };
-                        this.customRect(type, this.params);
-                        break;
                     case "comment":
-                        this.cancelCroppingImage();
-                        this.currentActiveTool = type;
+                    case "line":
                         this.params = {
                             fill: (params && params.fill) ? params.fill : 'transparent',
                             stroke: (params && params.stroke) ? params.stroke : this.color,
@@ -204,36 +183,15 @@
                             noScaleCache: (params && params.noScaleCache) ? params.noScaleCache : false,
                             strokeDashArray: (params && params.strokeDashArray) ? params.strokeDashArray : false,
                             borderRadius: (params && params.borderRadius) ? params.borderRadius : 0,
-                            id: (params && params.id) ? params.id : '',
-                        };
-                        this.customRect(type, this.params);
-                        break;
-                    case "line":
-                        this.cancelCroppingImage();
-                        this.currentActiveTool = type;
-                        this.params = {
-                            fill: (params && params.fill) ? params.fill : 'transparent',
-                            stroke: (params && params.stroke) ? params.stroke : this.color,
-                            strokeWidth: (params && params.strokeWidth) ? params.strokeWidth : this.strokeWidth,
-                            angle: (params && params.angle) ? params.angle : 0,
-                            width: (params && params.width) ? params.width : null,
-                            height: (params && params.height) ? params.height : null,
-                            top: (params && params.top) ? params.top : 0,
-                            left: (params && params.left) ? params.left : 0,
-                            opacity: (params && params.opacity) ? params.opacity : 1,
-                            strokeUniform: (params && params.strokeUniform) ? params.strokeUniform : true,
-                            noScaleCache: (params && params.noScaleCache) ? params.noScaleCache : false,
-                            strokeDashArray: (params && params.strokeDashArray) ? params.strokeDashArray : false,
                             id: (params && params.id) ? params.id : '',
                         };
                         this.customRect(type, this.params);
                         break;
                     case 'selectMode':
-                        this.currentActiveTool = type;
-                        this.drag();
+                        this.currentActiveTool = type
+                        this.drag()
                         break;
                     case 'arrow':
-                        this.currentActiveTool = type;
                         this.params = {
                             fill: (params && params.fill) ? params.fill : 'transparent',
                             stroke: (params && params.stroke) ? params.stroke : this.color,
@@ -246,7 +204,6 @@
                         this.drawArrow(this.params);
                         break;
                     case 'freeDrawing':
-                        this.currentActiveTool = type;
                         this.params = {
                             stroke: (params && params.stroke) ? params.stroke : this.color,
                             strokeWidth: (params && params.strokeWidth) ? params.strokeWidth : this.strokeWidth,
@@ -256,7 +213,6 @@
                         this.drawing(this.params);
                         break;
                     case 'crop':
-                        this.currentActiveTool = type;
                         this.params = {
                             width: (params && params.width) ? params.width : 200,
                             height: (params && params.height) ? params.height : 200,
@@ -280,7 +236,6 @@
                         new CropImage(this.canvas, true, false, false, this.params);
                         break;
                     case 'eraser':
-                        this.currentActiveTool = type;
                         let inst = this;
                         this.canvas.isDrawingMode = false;
                         inst.selectable = true;
@@ -293,7 +248,9 @@
                             }
                         });
                         break;
+
                     default:
+                        break;
                 }
             },
             saveImage() {
@@ -417,8 +374,7 @@
                     this.createText = false;
                     new Text(this.canvas, false);
                 }
-                this.cancelCroppingImage();
-
+                this.cancelCroppingImage()
             },
             addText(params) {
                 this.currentActiveMethod = this.addText;
