@@ -134,7 +134,7 @@
             set(type, params) {
                 this.cancelCroppingImage()
                 // if (this.currentActiveTool === 'eraser') {
-                    this.canvas.off('mouse:down')
+                    // this.canvas.off('mouse:down')
                 // }
                 this.currentActiveTool = type
                 switch (type) {
@@ -239,8 +239,9 @@
                         let inst = this;
                         this.canvas.isDrawingMode = false;
                         inst.selectable = true;
+                        this.canvas.off("mouse:down")
                         this.canvas.on("mouse:down", function () {
-                            if (inst.canvas.getActiveObject()) {
+                            if (inst.canvas.getActiveObject() && inst.currentActiveTool === 'eraser') {
                                 inst.canvas.remove(inst.canvas.getActiveObject());
                                 let canvasProperties = {width: inst.canvas.width, height: inst.canvas.height}
                                 let currentCanvas = {json: inst.canvas.toJSON(), canvas: canvasProperties};
