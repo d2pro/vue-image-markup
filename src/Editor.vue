@@ -132,10 +132,10 @@
                 return this.canvas
             },
             set(type, params) {
-                if (this.currentActiveTool === 'eraser') {
-                    this.canvas.off('mouse:down')
-                }
                 this.cancelCroppingImage()
+                // if (this.currentActiveTool === 'eraser') {
+                    this.canvas.off('mouse:down')
+                // }
                 this.currentActiveTool = type
                 switch (type) {
                     case "text":
