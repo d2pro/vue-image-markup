@@ -91,7 +91,7 @@
                 if (activeObject) {
                     let props = prop.split('|')
                     console.log('props', props);
-                    let propName = activeObject[props[0]] !== undefined ? props[0] : (props.length > 1 ? props[1] : null)
+                    let propName = (props[0] in activeObject) ? props[0] : (props.length > 1 ? props[1] : null)
                     console.log('pn', propName);
                     if (propName) {
                         activeObject.set(propName, value)
