@@ -114,7 +114,7 @@
                 xhr.send();
             },
             clear() {
-                this.canvas.clear();
+                this.canvas.clear()
                 this.cancelCroppingImage()
             },
             set(type, params) {
@@ -524,7 +524,8 @@
                         opacity: params.opacity,
                         left: params.left,
                         top: params.top,
-                        noScaleCache: params.noScaleCache
+                        noScaleCache: params.noScaleCache,
+                        id: params.id
                     });
                     this.canvas.add(this.rectangle);
                 }
@@ -540,7 +541,8 @@
                     stroke: params.stroke,
                     fill: params.fill,
                     borderColor: 'yellow',
-                    noScaleCache: params.noScaleCache
+                    noScaleCache: params.noScaleCache,
+                    id: params.id
                 });
                 this.canvas.add(this.circle);
 
