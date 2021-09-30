@@ -102,7 +102,11 @@ export default {
           this.canvas.requestRenderAll()
       }
     },
-    setBackgroundImage(imageUrl, backgroundColor = "#fff") {
+    setBackgroundImage(imageUrl) {
+      if (! imageUrl) {
+        return
+      }
+
       let img = new Image();
       this.toDataUrl(imageUrl, (dataUri) => {
         img.src = dataUri
@@ -394,78 +398,73 @@ export default {
       new Text(this.canvas, this.createText, params)
     },
     undo() {
-        if (this.canvas.getActiveObject()) {
-            this.canvas.discardActiveObject().renderAll()
-        }
-        this.drag();
-        this.history = new CanvasHistory();
-        if (this.history.length) {
-            this.objects.push(this.history.pop())
-            if (this.history[this.history.length - 1]) {
-                if (this.history[this.history.length - 1].canvas) {
-                    let lastCanvasProperties = this.history[this.history.length - 1].canvas;
-                    if (lastCanvasProperties.width != this.canvas.width || lastCanvasProperties.height != this.canvas.height) {
-                        this.canvas.setDimensions({
-                            width: lastCanvasProperties.width,
-                            height: lastCanvasProperties.height
-                        })
-                        JSON.parse(JSON.stringify(this.history[this.history.length - 1]))
-                        this.canvas.loadFromJSON(this.history[this.history.length - 1].json)
-                    }
-                    else{
-                        let canvasObjects = this.history[this.history.length - 1].json.objects;
-                        if(this.canvas._objects.length > 0){
-                            this.objects.push(this.canvas._objects.pop());
-                        }
-                    }
-                }
-
-                if (this.history[this.history.length - 1].croppedImage && this.history[this.history.length - 1].imagePosition) {
-
-                    let inst = this;
-                    fabric.Image.fromURL(this.history[this.history.length - 1].croppedImage, function (img) {
-                        img.set({
-                            top: -(inst.history[inst.history.length - 1].imagePosition.top),
-                            left: -(inst.history[inst.history.length - 1].imagePosition.left),
-                        });
-                        inst.canvas.setBackgroundImage(img, inst.canvas.renderAll.bind(inst.canvas));
-                    });
-                } else {
-                    this.setBackgroundImage(this.history[this.history.length - 1].croppedImage)
-                }
-                this.canvas.renderAll();
+      if (this.canvas.getActiveObject()) {
+        this.canvas.discardActiveObject().renderAll()
+      }
+      this.drag()
+      this.history = new CanvasHistory()
+      if (this.history.length) {
+        this.objects.push(this.history.pop())
+        if (this.history[this.history.length - 1]) {
+          if (this.history[this.history.length - 1].canvas) {
+            let lastCanvasProperties = this.history[this.history.length - 1].canvas
+            if (lastCanvasProperties.width != this.canvas.width || lastCanvasProperties.height != this.canvas.height) {
+              this.canvas.setDimensions({
+                width: lastCanvasProperties.width,
+                height: lastCanvasProperties.height
+              })
+              JSON.parse(JSON.stringify(this.history[this.history.length - 1]))
+              this.canvas.loadFromJSON(this.history[this.history.length - 1].json)
+            } else {
+              // let canvasObjects = this.history[this.history.length - 1].json.objects;
+              if (this.canvas._objects.length > 0){
+                this.objects.push(this.canvas._objects.pop());
+              }
             }
+          }
+          if (this.history[this.history.length - 1].croppedImage && this.history[this.history.length - 1].imagePosition) {
+            let inst = this
+            fabric.Image.fromURL(this.history[this.history.length - 1].croppedImage, function (img) {
+              img.set({
+                top: -(inst.history[inst.history.length - 1].imagePosition.top),
+                left: -(inst.history[inst.history.length - 1].imagePosition.left),
+              })
+              inst.canvas.setBackgroundImage(img, inst.canvas.renderAll.bind(inst.canvas))
+            })
+          } else {
+            this.setBackgroundImage(this.history[this.history.length - 1].croppedImage)
+          }
+          this.canvas.renderAll()
         }
+      }
     },
     redo() {
-        this.drag();
-        if (this.objects.length > 0) {
-            if (this.objects[this.objects.length - 1]) {
-                if (this.objects[this.objects.length - 1].canvas && !this.objects[this.objects.length - 1].type) {
-                    let lastCanvasProperties = this.objects[this.objects.length - 1].canvas;
-                    if (lastCanvasProperties.width != this.canvas.width || lastCanvasProperties.height != this.canvas.height) {
-                        this.canvas.setDimensions({
-                            width: lastCanvasProperties.width,
-                            height: lastCanvasProperties.height
-                        })
-                    }
-                    JSON.parse(JSON.stringify(this.objects[this.objects.length - 1]))
-                    this.canvas.loadFromJSON(this.objects[this.objects.length - 1].json)
-                }
-                else if(this.objects[this.objects.length - 1].type){
-                    this.canvas.add(this.objects.pop())
-                }
-                if (this.objects[this.objects.length - 1].imagePosition && this.objects[this.objects.length - 1].croppedImage) {
-                    let currentProperties;
-                    currentProperties = this.objects[this.objects.length - 1].imagePosition;
-                    let inst = this;
-                    fabric.Image.fromURL(this.objects[this.objects.length - 1].croppedImage, function (img) {
-                        inst.canvas.setBackgroundImage(img, inst.canvas.renderAll.bind(inst.canvas));
-                    });
-                }
+      this.drag()
+      if (this.objects.length > 0) {
+        if (this.objects[this.objects.length - 1]) {
+          if (this.objects[this.objects.length - 1].canvas && !this.objects[this.objects.length - 1].type) {
+            let lastCanvasProperties = this.objects[this.objects.length - 1].canvas
+            if (lastCanvasProperties.width != this.canvas.width || lastCanvasProperties.height != this.canvas.height) {
+              this.canvas.setDimensions({
+                width: lastCanvasProperties.width,
+                height: lastCanvasProperties.height
+              })
             }
-            new CanvasHistory(false, false, this.objects.pop())
+            JSON.parse(JSON.stringify(this.objects[this.objects.length - 1]))
+            this.canvas.loadFromJSON(this.objects[this.objects.length - 1].json)
+          } else if(this.objects[this.objects.length - 1].type) {
+            this.canvas.add(this.objects.pop())
+          }
+          if (this.objects[this.objects.length - 1].imagePosition && this.objects[this.objects.length - 1].croppedImage) {
+            // let currentProperties = this.objects[this.objects.length - 1].imagePosition;
+            let inst = this;
+            fabric.Image.fromURL(this.objects[this.objects.length - 1].croppedImage, function (img) {
+              inst.canvas.setBackgroundImage(img, inst.canvas.renderAll.bind(inst.canvas));
+            });
+          }
         }
+        new CanvasHistory(false, false, this.objects.pop())
+      }
     },
     drawing(params) {
       if (this.canvas.__eventListeners) {
