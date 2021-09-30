@@ -34,7 +34,6 @@ export default {
       circle: null,
       currentActiveMethod: null,
       currentActiveTool: null,
-      selectedObject: null,
       objects: [],
       width: null,
       height: null,
@@ -50,13 +49,6 @@ export default {
   computed: {
     canvasProperties() {
       return { width: this.canvasWidth, height: this.canvasHeight }
-    },
-    activeObjectType() {
-      if (this.canvas.getActiveObject() && this.canvas.getActiveObject().type) {
-        return this.canvas.getActiveObject().type
-      }
-
-      return null
     },
   },
 
@@ -83,13 +75,16 @@ export default {
     changeColor(color) {
       this.color = color
       let prop = 'stroke'
-      console.log('t', this.activeObjectType, this.canvas.getActiveObject().type);
-      if (this.activeObjectType === 'text') {
+      if (this._activeObjectType() === 'text' || this._activeObjectType() === 'i-text') {
         prop = 'fill'
       }
       console.log('p', prop);
       this._updateActiveObjectProperty(prop, color)
       this.set(this.currentActiveTool)
+    },
+    _activeObjectType() {
+      let object = this.canvas.getActiveObject()
+      return (object && object.type) ? object.type : null
     },
     changeStrokeWidth(strokeWidth) {
       this.strokeWidth = strokeWidth
