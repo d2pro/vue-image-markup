@@ -78,7 +78,6 @@ export default {
       if (this._activeObjectType() === 'text' || this._activeObjectType() === 'i-text') {
         prop = 'fill'
       }
-      console.log('p', prop);
       this._updateActiveObjectProperty(prop, color)
       this.set(this.currentActiveTool)
     },
@@ -92,9 +91,9 @@ export default {
       this.set(this.currentActiveTool)
     },
     _updateActiveObjectProperty(prop, value) {
-      // let activeObject = this.canvas.getActiveObject()
-      if (this.activeObject && this.activeObject.hasOwnProperty(prop)) {
-          this.activeObject.set(prop, value)
+      let activeObject = this.canvas.getActiveObject()
+      if (activeObject && activeObject.hasOwnProperty(prop)) {
+          activeObject.set(prop, value)
           this.canvas.requestRenderAll()
       }
     },
