@@ -16,8 +16,8 @@ export default {
   name: 'Editor',
 
   props: {
-    canvasWidth: { type: [String, Number], required: true },
-    canvasHeight: { type: [String, Number], required: true },
+    canvasWidth: { type: Number, required: true },
+    canvasHeight: { type: Number, required: true },
     editorId: { type: String, default: 'c' },
     backgroundColor: { type: String, default: '#fff' }
   },
@@ -49,7 +49,7 @@ export default {
 
   computed: {
     canvasProperties() {
-      return { width: this.width, height: this.height }
+      return { width: this.canvasWidth, height: this.canvasHeight }
     },
     activeObjectType() {
       if (this.activeObject) {
