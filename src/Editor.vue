@@ -66,7 +66,7 @@ export default {
     this.canvas.backgroundColor = this.backgroundColor
     let currentCanvas = {json: this.canvas.toJSON(), canvas: this.canvasProperties};
     new CanvasHistory(this.canvas, currentCanvas);
-    this.canvas.on('object:selected', (e) => {
+    this.canvas.on('object:selected', function(e) {
       console.log('os', e.target);
       this.activeObject = e.target
       console.log(e.target.get('type'));
