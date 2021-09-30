@@ -16,7 +16,7 @@ export default {
   props: {
     canvasWidth: { type: Number, required: true },
     canvasHeight: { type: Number, required: true },
-    editorId: { type: String, default: 'c' },
+    editorId: { type: String, default: '__canvas__' },
     backgroundColor: { type: String, default: '#fff' }
   },
 
