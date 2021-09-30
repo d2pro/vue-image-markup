@@ -1,7 +1,5 @@
 <template>
-  <div class="custom-editor">
-    <canvas :id="editorId"></canvas>
-  </div>
+  <canvas :id="editorId"></canvas>
 </template>
 
 <script>
