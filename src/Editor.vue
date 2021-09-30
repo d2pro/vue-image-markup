@@ -99,7 +99,7 @@ export default {
     },
     _updateActiveObjectProperty(prop, value) {
       // let activeObject = this.canvas.getActiveObject()
-      if (this.activeObject && this.activeObject[prop]) {
+      if (this.activeObject && this.activeObject.hasOwnProperty(prop)) {
           this.activeObject.set(prop, value)
           this.canvas.requestRenderAll()
       }
