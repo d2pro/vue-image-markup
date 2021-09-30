@@ -94,10 +94,10 @@
                     console.log('props', props);
                     let propName = activeObject.hasOwnProperty(props[0]) ? props[0] : (props.length > 1 ? props[1] : null)
                     console.log('pn', propName);
-                    if (propName) {
-                        activeObject.set(propName, value)
-                        this.canvas.requestRenderAll()
-                    }
+                    // if (propName) {
+                    //     activeObject.set(propName, value)
+                    //     this.canvas.requestRenderAll()
+                    // }
                 }
             },
             setBackgroundImage(imageUrl, backgroundColor = "#fff") {
