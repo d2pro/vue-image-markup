@@ -52,8 +52,8 @@ export default {
       return { width: this.canvasWidth, height: this.canvasHeight }
     },
     activeObjectType() {
-      if (this.activeObject && this.activeObject.type) {
-        return this.activeObject.type
+      if (this.canvas.getActiveObject() && this.canvas.getActiveObject().type) {
+        return this.canvas.getActiveObject().type
       }
 
       return null
@@ -66,11 +66,6 @@ export default {
     this.canvas.backgroundColor = this.backgroundColor
     let currentCanvas = {json: this.canvas.toJSON(), canvas: this.canvasProperties};
     new CanvasHistory(this.canvas, currentCanvas);
-    this.canvas.on('object:selected', function(e) {
-      console.log('os', e.target);
-      this.activeObject = e.target
-      console.log(e.target.get('type'));
-    })
   },
 
   methods: {
@@ -88,7 +83,7 @@ export default {
     changeColor(color) {
       this.color = color
       let prop = 'stroke'
-      console.log('t', this.activeObjectType);
+      console.log('t', this.activeObjectType, this.canvas.getActiveObject().type);
       if (this.activeObjectType === 'text') {
         prop = 'fill'
       }
