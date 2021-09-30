@@ -105,7 +105,6 @@ export default {
     _updateActiveObjectProperty(prop, value) {
       let activeObject = this.canvas.getActiveObject()
       if (activeObject && activeObject.hasOwnProperty(prop)) {
-        console.log('ao', activeObject, prop, value);
         activeObject.set(prop, value)
         this.canvas.requestRenderAll()
       }
