@@ -84,9 +84,11 @@ export default {
     changeColor(color) {
       this.color = color
       let prop = 'stroke'
+      console.log('t', this.activeObjectType);
       if (this.activeObjectType === 'text') {
         prop = 'fill'
       }
+      console.log('p', prop);
       this._updateActiveObjectProperty(prop, color)
       this.set(this.currentActiveTool)
     },
@@ -96,9 +98,9 @@ export default {
       this.set(this.currentActiveTool)
     },
     _updateActiveObjectProperty(prop, value) {
-      let activeObject = this.canvas.getActiveObject()
-      if (activeObject && activeObject[prop]) {
-          activeObject.set(prop, value)
+      // let activeObject = this.canvas.getActiveObject()
+      if (this.activeObject && this.activeObject[prop]) {
+          this.activeObject.set(prop, value)
           this.canvas.requestRenderAll()
       }
     },
