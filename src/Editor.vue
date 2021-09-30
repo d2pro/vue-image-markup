@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import {fabric} from 'fabric'
+import { fabric } from 'fabric'
 import Shape from './assets/js/shape'
 import Text from './assets/js/text'
 import Arrow from './assets/js/arrow'
@@ -40,7 +40,13 @@ export default {
       params: {},
       color: '#000000',
       strokeWidth: 7,
-      fontSize: 32,
+      textStyle: {
+        fontFamily: 'Helvetica',
+        fontSize: 32,
+        fontWeight: 'normal',
+        fontStyle: 'normal',
+        placeholder: 'Add text'
+      },
       croppedImage: false,
       history: [],
     }
@@ -89,6 +95,12 @@ export default {
       this.strokeWidth = strokeWidth
       this._updateActiveObjectProperty('strokeWidth', strokeWidth)
       this.set(this.currentActiveTool)
+    },
+    changeTextStyle(textStyle) {
+      this.textStyle = textStyle
+      for (const prop in textStyle) {
+        this._updateActiveObjectProperty(prop, textStyle[prop])
+      }
     },
     _updateActiveObjectProperty(prop, value) {
       let activeObject = this.canvas.getActiveObject()
@@ -154,11 +166,11 @@ export default {
         case "text":
           this.params = {
             fill: (params && params.fill) ? params.fill : this.color,
-            fontFamily: (params && params.fontFamily) ? params.fontFamily : 'Arial',
-            fontSize: (params && params.fontSize) ? params.fontSize : this.fontSize,
-            fontStyle: (params && params.fontStyle) ? params.fontStyle : this.fontStyle,
-            fontWeight: (params && params.fontWeight) ? params.fontWeight : this.fontWeight,
-            placeholder: (params && params.placeholder) ? params.placeholder : 'Add Text',
+            fontFamily: (params && params.fontFamily) ? params.fontFamily : this.textStyle.fontFamily,
+            fontSize: (params && params.fontSize) ? params.fontSize : this.textStyle.fontFamily,
+            fontStyle: (params && params.fontStyle) ? params.fontStyle : this.textStyle.fontStyle,
+            fontWeight: (params && params.fontWeight) ? params.fontWeight : this.textStyle.fontWeight,
+            placeholder: (params && params.placeholder) ? params.placeholder : this.textStyle.placeholder,
             id: (params && params.id) ? params.id : '',
           }
           this.addText(this.params)
