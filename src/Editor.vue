@@ -52,8 +52,8 @@ export default {
       return { width: this.canvasWidth, height: this.canvasHeight }
     },
     activeObjectType() {
-      if (this.activeObject) {
-        return this.activeObject.get('type')
+      if (this.activeObject && this.activeObject.type) {
+        return this.activeObject.type
       }
 
       return null
@@ -66,7 +66,11 @@ export default {
     this.canvas.backgroundColor = this.backgroundColor
     let currentCanvas = {json: this.canvas.toJSON(), canvas: this.canvasProperties};
     new CanvasHistory(this.canvas, currentCanvas);
-    this.canvas.on('object:selected', this._onObjectSelected)
+    this.canvas.on('object:selected', (e) => {
+      console.log('os', e.target);
+      this.activeObject = e.target
+      console.log(e.target.get('type'));
+    })
   },
 
   methods: {
@@ -527,10 +531,6 @@ export default {
       })
       this.canvas.add(this.circle)
       this.canvas.renderAll()
-    },
-    _onObjectSelected(e) {
-      this.activeObject = e.target
-      console.log(e.target.get('type'));
     },
   }
 }
