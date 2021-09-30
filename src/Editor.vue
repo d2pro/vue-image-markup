@@ -17,6 +17,7 @@ export default {
     canvasWidth: { type: Number, required: true },
     canvasHeight: { type: Number, required: true },
     editorId: { type: String, default: '__canvas__' },
+    backgroundImageUrl: String,
     backgroundColor: { type: String, default: '#fff' }
   },
 
@@ -60,8 +61,11 @@ export default {
     this.canvas = new fabric.Canvas(this.editorId);
     this.canvas.setDimensions(this.canvasProperties)
     this.canvas.backgroundColor = this.backgroundColor
-    let currentCanvas = {json: this.canvas.toJSON(), canvas: this.canvasProperties};
-    new CanvasHistory(this.canvas, currentCanvas);
+    let currentCanvas = {json: this.canvas.toJSON(), canvas: this.canvasProperties}
+    new CanvasHistory(this.canvas, currentCanvas)
+    if (this.backgroundImageUrl) {
+      this.setBackgroundImage(this.backgroundImageUrl)
+    }
   },
 
   methods: {
@@ -286,7 +290,7 @@ export default {
       reader.onload = function (event) {
         let imgObj = new Image()
         imgObj.src = event.target.result
-        imgObj.onload = function () {
+        imgObj.onload = function() {
           let image = new fabric.Image(imgObj)
           if (inst.canvas.width <= image.width || inst.canvas.height <= image.height) {
             let canvasAspect = inst.canvas.width / inst.canvas.height
