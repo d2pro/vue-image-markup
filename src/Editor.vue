@@ -97,7 +97,7 @@ export default {
       this.set(this.currentActiveTool)
     },
     changeTextStyle(textStyle) {
-      this.textStyle = textStyle
+      Object.assign(this.textStyle, textStyle)
       for (const prop in textStyle) {
         this._updateActiveObjectProperty(prop, textStyle[prop])
       }
