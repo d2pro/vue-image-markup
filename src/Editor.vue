@@ -105,8 +105,9 @@ export default {
     _updateActiveObjectProperty(prop, value) {
       let activeObject = this.canvas.getActiveObject()
       if (activeObject && activeObject.hasOwnProperty(prop)) {
-          activeObject.set(prop, value)
-          this.canvas.requestRenderAll()
+        console.log('ao', activeObject, prop, value);
+        activeObject.set(prop, value)
+        this.canvas.requestRenderAll()
       }
     },
     setBackgroundImage(imageUrl) {
@@ -167,7 +168,7 @@ export default {
           this.params = {
             fill: (params && params.fill) ? params.fill : this.color,
             fontFamily: (params && params.fontFamily) ? params.fontFamily : this.textStyle.fontFamily,
-            fontSize: (params && params.fontSize) ? params.fontSize : this.textStyle.fontFamily,
+            fontSize: (params && params.fontSize) ? params.fontSize : this.textStyle.fontSize,
             fontStyle: (params && params.fontStyle) ? params.fontStyle : this.textStyle.fontStyle,
             fontWeight: (params && params.fontWeight) ? params.fontWeight : this.textStyle.fontWeight,
             placeholder: (params && params.placeholder) ? params.placeholder : this.textStyle.placeholder,
