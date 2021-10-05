@@ -159,7 +159,14 @@ export default {
       this.canvas.clear()
     },
     serialize() {
-      return this.canvas.toJSON()
+      return {
+        json: this.canvas.toJSON(),
+        canvas: this.canvas.canvasProperties
+      }
+    },
+    deserialize(canvas) {
+      this.canvas.setDimensions(canvas.canvas)
+      this.loadFromJSON(canvas.json)
     },
     loadFromJSON(json) {
       this.canvas.loadFromJSON(json)
