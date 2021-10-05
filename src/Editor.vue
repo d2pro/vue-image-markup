@@ -17,8 +17,9 @@ export default {
     canvasWidth: { type: Number, required: true },
     canvasHeight: { type: Number, required: true },
     editorId: { type: String, default: '__canvas__' },
+    backgroundColor: { type: String, default: '#fff' },
     backgroundImageUrl: String,
-    backgroundColor: { type: String, default: '#fff' }
+    resizeToBackgroundImage: { type: Boolean, default: false },
   },
 
   data() {
@@ -64,7 +65,7 @@ export default {
     let currentCanvas = {json: this.canvas.toJSON(), canvas: this.canvasProperties}
     new CanvasHistory(this.canvas, currentCanvas)
     if (this.backgroundImageUrl) {
-      this.setBackgroundImage(this.backgroundImageUrl)
+      this.setBackgroundImage(this.backgroundImageUrl, this.resizeToBackgroundImage)
     }
   },
 
@@ -111,7 +112,7 @@ export default {
         this.canvas.requestRenderAll()
       }
     },
-    setBackgroundImage(imageUrl) {
+    setBackgroundImage(imageUrl, resizeToBackgroundImage) {
       if (! imageUrl) {
         return
       }
@@ -122,8 +123,14 @@ export default {
         let inst = this
         img.onload = function() {
           let image = new fabric.Image(img)
-          image.scaleToWidth(inst.canvasWidth)
-          image.scaleToHeight(inst.canvasHeight)
+          if (resizeToBackgroundImage) {
+            // Resize canvas size...
+            inst.canvas.setDimensions({width: image.width, height: image.height})
+          } else {
+            // ...or resize image size
+            image.scaleToWidth(inst.canvasWidth)
+            image.scaleToHeight(inst.canvasHeight)
+          }
           inst.canvas.setBackgroundImage(image, inst.canvas.renderAll.bind(inst.canvas))
           let currentCanvas = {
             json: inst.canvas.toJSON(),
