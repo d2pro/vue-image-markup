@@ -22,13 +22,11 @@ fabric.LineArrow = fabric.util.createClass(fabric.Line, {
         let xDiff = this.x2 - this.x1;
         let yDiff = this.y2 - this.y1;
         let angle = Math.atan2(yDiff, xDiff);
-        // this.drawArrow(angle, p.x2, p.y2, this.heads[0]);
         this.drawArrow(angle, p.x2, p.y2, true);
         ctx.save();
         xDiff = -this.x2 + this.x1;
         yDiff = -this.y2 + this.y1;
         angle = Math.atan2(yDiff, xDiff);
-        // this.drawArrow(angle, p.x1, p.y1, this.heads[1]);
         this.drawArrow(angle, p.x1, p.y1, false);
     },
 
@@ -203,7 +201,6 @@ export default (function () {
             hasControls: false,
             objectCaching: false,
             perPixelTargetFind: true,
-            // heads: [1, 0],
             id: arrowId ? arrowId : 'arrow'
 
         });
