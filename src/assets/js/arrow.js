@@ -1,5 +1,5 @@
-import fabric from 'fabric';
-import CanvasHistory from "./canvasHistory";
+import { fabric } from 'fabric'
+import CanvasHistory from "./canvasHistory"
 
 let params;
 fabric.LineArrow = fabric.util.createClass(fabric.Line, {

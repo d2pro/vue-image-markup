@@ -1,5 +1,6 @@
-import {fabric} from "fabric";
-import CanvasHistory from "./canvasHistory";
+import { fabric } from "fabric"
+import CanvasHistory from "./canvasHistory"
+
 export default (function () {
 
     let disabled = false;

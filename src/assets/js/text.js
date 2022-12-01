@@ -1,5 +1,5 @@
-import {fabric} from "fabric";
-import CanvasHistory from "./canvasHistory.js";
+import { fabric } from "fabric"
+import CanvasHistory from "./canvasHistory.js"
 
 export default (function () {
     let activeObject = false;
