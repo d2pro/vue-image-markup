@@ -60,7 +60,7 @@
     "url": "https://github.com/d2pro/vue-image-markup/issues"
   },
   "homepage": "https://github.com/d2pro/vue-image-markup#readme",
-  "devDependencies": {
+  "dependencies": {
     "fabric": "^5.2.4"
   }
 }
