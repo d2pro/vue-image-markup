@@ -61,6 +61,6 @@
   },
   "homepage": "https://github.com/d2pro/vue-image-markup#readme",
   "dependencies": {
-    "fabric": "^4.6.0"
+    "fabric": "^5.2.4"
   }
 }
