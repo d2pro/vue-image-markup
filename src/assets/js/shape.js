@@ -1,4 +1,4 @@
-import {fabric} from 'fabric';
+import fabric from 'fabric';
 import CanvasHistory from "./canvasHistory";
 
 export default (function () {
