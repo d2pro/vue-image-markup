@@ -1,6 +1,6 @@
 {
   "name": "vue-image-markup",
-  "version": "3.2.11",
+  "version": "3.2.12",
   "description": "vue-image-markup will provide you to edit uploaded image easily and save it.",
   "main": "src/Editor.vue",
   "repository": {
@@ -60,7 +60,7 @@
     "url": "https://github.com/d2pro/vue-image-markup/issues"
   },
   "homepage": "https://github.com/d2pro/vue-image-markup#readme",
-  "dependencies": {
+  "devDependencies": {
     "fabric": "^5.2.4"
   }
 }
